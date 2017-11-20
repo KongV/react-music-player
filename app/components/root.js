@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import Header from './header';
-import Progress from './Progress';
-let duration = null;
-class Root extends Component{
+import Player from "../page/player";
+import MusicList from "../page/MusicList";
+import {MUSIC_LIST} from "../config/musiclist";
+import{Router ,IndexRoute, Link, Route,hashHistory}from 'react-router';
+
+class App extends Component{
     constructor(){
         super();
-        this.state = {progress:'_'};
+        this.state = {
+            musicList:MUSIC_LIST,
+            currentMusicItem: MUSIC_LIST[0]};
+
 
     }
     componentDidMount(){
@@ -18,30 +24,31 @@ class Root extends Component{
             supplied:'mp3',
             wmode:'window'
         });
-        $('#player').bind($.jPlayer.event.timeupdate,(e)=>{
-            duration = e.jPlayer.status.duration;
-            this.setState({
-                progress: e.jPlayer.status.currentPercentAbsolute
-            });
-        });
+
     }
-    componentWillUnMount(){
-        $('#player').unbind($.jPlayer.event.timeupdate)
-    }
-    progressChangeHandler(progress){
-        //console.log(duration * progress)
-        $('#player').jPlayer('play',duration * progress)
-    }
+
     render(){
         return(
             <div>
-            <Header/>
-             <div id="player"></div>
-            <Progress progress = {this.state.progress}
-                onProgressChange={this.progressChangeHandler}
-                barColor = "#ff0000"></Progress>
+                <Header/>
+                <div id="player"></div>
+                {React.cloneElement(this.props.children, this.state)};
+
             </div>
         )
     }
+}
+
+class Root extends Component{
+   render(){
+       return(
+           <Router history={hashHistory}>
+           <Route path="/" component={App}>
+               <IndexRoute component={Player}></IndexRoute>
+               <Route path="/list" component={MusicList}></Route>
+           </Route>
+       </Router>
+       )
+   }
 }
 export default Root;
