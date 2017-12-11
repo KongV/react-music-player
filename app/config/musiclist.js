@@ -35,6 +35,12 @@ export const MUSIC_LIST = [
         artist: 'Simon & Garfunkel',
         file: 'http://oj4t8z2d5.bkt.clouddn.com/sound-of-silence.mp3',
         cover: 'http://oj4t8z2d5.bkt.clouddn.com/sound-of-silence.jpg'
+    },{
+        id: 7,
+        title: '成都',
+        artist: '赵雷',
+        file: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%90%E9%83%BD.mp3',
+        cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%90%E9%83%BD.jpg'
     }
 
 ];
